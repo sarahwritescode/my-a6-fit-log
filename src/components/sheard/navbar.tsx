@@ -2,17 +2,17 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image'
 
-const navbar = () => {
+const Navbar = () => {
 
 const links = <>    
-       <li><Link href='/workouts'>Workouts</Link></li>
-        <li><Link href='/myplan'>My Plan</Link></li>
+       <li><Link href='/' className='btn rounded-2xl hover:bg-[#b8e600] hover:text-black btn-ghost'>Workouts</Link></li>
+        <li><Link href='/myplan'  className='btn rounded-2xl hover:bg-[#b8e600] hover:text-black btn-ghost'>My Plan</Link></li>
        
 </>
 
 
     return (
-       <div className="navbar bg-base-100 shadow-sm">
+       <div className="navbar bg-base-100 mx-auto px-15 shadow-sm">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -32,7 +32,9 @@ const links = <>
   height={40}
   alt="FitLog logo"
 />
-    <a className="btn btn-ghost text-xl">FITLOG</a>
+   <Link href="/" className="btn btn-ghost text-xl">
+  FITLOG
+</Link>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
@@ -63,4 +65,4 @@ const links = <>
     );
 };
 
-export default navbar;
+export default Navbar;
