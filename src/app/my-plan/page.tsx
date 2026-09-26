@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-
+import { toast } from "react-toastify";
 
 
 import Link from "next/link";
@@ -30,11 +30,13 @@ const MyPlanPage = () => {
     0
   );
 
-  const handleRemove = (id: number) => {
+  const handleRemove = (id: number, workoutName: string) => {
     if (activeTab === "plan") {
       removeFromPlan(id);
+      toast.success(`${workoutName} removed from today's plan.`);
     } else {
       removeFromSaved(id);
+      toast.success(`${workoutName} removed from saved.`);
     }
   };
 
@@ -97,22 +99,20 @@ const MyPlanPage = () => {
 
             <button
               onClick={() => setActiveTab("plan")}
-              className={`tab ${
-                activeTab === "plan"
+              className={`tab ${activeTab === "plan"
                   ? "bg-[#ccff00] font-bold text-black"
                   : "text-zinc-400"
-              }`}
+                }`}
             >
               Today&apos;s Plan
             </button>
 
             <button
               onClick={() => setActiveTab("saved")}
-              className={`tab ${
-                activeTab === "saved"
+              className={`tab ${activeTab === "saved"
                   ? "bg-[#ccff00] font-bold text-black"
                   : "text-zinc-400"
-              }`}
+                }`}
             >
               Saved
             </button>
@@ -225,7 +225,7 @@ const MyPlanPage = () => {
                       <button
                         className="btn btn-sm border-none bg-[#ccff00] text-black hover:bg-[#b8e600]"
                         onClick={() => {
-                          alert(`${workout.name} marked as done`);
+                          toast.success(`${workout.name} marked as done!`);
                         }}
                       >
                         ✓ Mark as Done
@@ -233,7 +233,7 @@ const MyPlanPage = () => {
                     )}
 
                     <button
-                      onClick={() => handleRemove(workout.id)}
+                      onClick={() => handleRemove(workout.id, workout.name)}
                       className="btn btn-square btn-sm border-zinc-700 bg-transparent text-zinc-400 hover:border-red-500 hover:bg-red-500/10 hover:text-red-400"
                       aria-label={`Remove ${workout.name}`}
                     >
