@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getWorkout } from "@/lib/api";
-
+import WorkoutActions from "@/components/workoutactions";
 type WorkoutDetailsPageProps = {
   params: Promise<{
     id: string;
@@ -114,15 +114,7 @@ const WorkOutPage = async ({ params }: WorkoutDetailsPageProps) => {
           </div>
 
           {/* Buttons */}
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <button className="btn flex-1 border-none bg-[#ccff00] text-black hover:bg-[#b8e600]">
-              Add to today&apos;s plan
-            </button>
-
-            <button className="btn flex-1 border border-zinc-700 bg-transparent text-white hover:bg-zinc-900">
-              Save for later
-            </button>
-          </div>
+          <WorkoutActions workout={workout} />
 
         </div>
       </div>
