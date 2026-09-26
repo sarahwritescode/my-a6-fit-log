@@ -1,7 +1,7 @@
   import React from 'react';
  import { getWorkouts } from "@/lib/api";
 import Hero from "@/components/hero";
-
+import WorkoutLibrary from "@/components/workoutlibrary";
 export default async function Home() {
   const workouts = await getWorkouts();
 
@@ -11,14 +11,9 @@ export default async function Home() {
     <main>
       <Hero />
 
-      <section
-        id="library"
-        className="min-h-screen bg-black text-white"
-      >
-        <h2 className="px-6 py-20 text-4xl font-bold">
-          THE LIBRARY
-        </h2>
-      </section>
+      
+
+       <WorkoutLibrary workouts={workouts} />
     </main>
   );
 }

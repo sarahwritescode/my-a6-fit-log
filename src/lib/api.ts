@@ -1,6 +1,8 @@
+import type { Workout } from "@/typs/workout";
+
 const API_URL = "https://api.abcz.workers.dev/api/fitlog";
 
-export async function getWorkouts() {
+export async function getWorkouts(): Promise<Workout[]> {
   const response = await fetch(API_URL);
 
   if (!response.ok) {
@@ -10,7 +12,7 @@ export async function getWorkouts() {
   return response.json();
 }
 
-export async function getWorkout(id) {
+export async function getWorkout(id: number): Promise<Workout> {
   const response = await fetch(`${API_URL}/${id}`);
 
   if (!response.ok) {
