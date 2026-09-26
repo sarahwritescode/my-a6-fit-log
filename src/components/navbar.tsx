@@ -7,7 +7,7 @@ const Navbar = () => {
   const { plan, saved } = useFitLog();
   const links = <>
     <li><Link href='/' className='btn rounded-2xl hover:bg-[#b8e600] hover:text-black btn-ghost'>Workouts</Link></li>
-    <li><Link href='/myplan' className='btn rounded-2xl hover:bg-[#b8e600] hover:text-black btn-ghost'>My Plan</Link></li>
+    <li><Link href='/my-plan' className='btn rounded-2xl hover:bg-[#b8e600] hover:text-black btn-ghost'>My Plan</Link></li>
 
   </>
 
@@ -43,29 +43,32 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end gap-2">
-        <div className='flex justify-between align-center'>
+        <div className="flex items-center gap-2 justify-between">
+  {/* Plan */}
+  <div className="flex items-center gap-2 text-sm font-semibold text-white">
+    <span>Plan</span>
 
-          {/* Plan */}
-          <span  className='flex item-center gap-8 text-sm font-semibold text-white'>
-            <p>Plan</p>
-            <Link
-              href="/my-plan"
-              className="rounded-full bg-[#ccff00] px-4 py-2 text-sm font-bold text-black"
-            >
-              {plan.length}
-            </Link></span>
+    <Link
+      href="/my-plan"
+      className="flex h-10 w-10 items-center justify-center rounded-full bg-[#ccff00] text-sm font-bold text-black"
+    >
+      {plan.length}
+    </Link>
+  </div>
 
-          {/* Saved */}
-          <span  className='flex item-center gap-8 text-sm font-semibold text-white'>
-           <p> Saved</p>
+  {/* Saved */}
+  <div className="flex items-center gap-2 text-sm font-semibold text-white">
+    <span>Saved</span>
 
-            <Link
-              href="/my-plan"
-              className="rounded-full border border-white/40 px-4 py-2 text-sm font-bold text-white"
-            >
-              {saved.length}
-            </Link></span>
-        </div>
+    <Link
+      href="/my-plan"
+      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-sm font-bold text-white"
+    >
+      {saved.length}
+    </Link>
+  </div>
+</div>
+
 
       </div>
 
