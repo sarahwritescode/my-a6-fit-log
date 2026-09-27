@@ -4,31 +4,40 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useFitLog } from "@/context/fitlogcontext";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const { plan, saved } = useFitLog();
+  const pathname = usePathname();
+ const links = (
+  <>
+    <li>
+      <Link
+        href="/"
+        className={`btn rounded-2xl ${
+          pathname === "/"
+            ? "bg-[#ccff00] text-black"
+            : "btn-ghost text-white"
+        } hover:bg-[#b8e600] hover:text-black`}
+      >
+        Workouts
+      </Link>
+    </li>
 
-  const links = (
-    <>
-      <li>
-        <Link
-          href="/"
-          className="btn btn-ghost rounded-2xl hover:bg-[#b8e600] hover:text-black"
-        >
-          Workouts
-        </Link>
-      </li>
-
-      <li>
-        <Link
-          href="/my-plan"
-          className="btn btn-ghost rounded-2xl hover:bg-[#b8e600] hover:text-black"
-        >
-          My Plan
-        </Link>
-      </li>
-    </>
-  );
+    <li>
+      <Link
+        href="/my-plan"
+        className={`btn rounded-2xl ${
+          pathname === "/my-plan"
+            ? "bg-[#ccff00] text-black"
+            : "btn-ghost text-white"
+        } hover:bg-[#b8e600] hover:text-black`}
+      >
+        My Plan
+      </Link>
+    </li>
+  </>
+);
 
   return (
     <div className="navbar border-b border-gray-700 bg-black">

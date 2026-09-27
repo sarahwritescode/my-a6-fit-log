@@ -3,6 +3,7 @@
 import type { Workout } from "@/typs/workout";
 import { useFitLog } from "@/context/fitlogcontext";
 import { toast } from "react-toastify";
+import { FiPlus, FiBookmark } from "react-icons/fi";
 
 type WorkoutActionsProps = {
   workout: Workout;
@@ -60,19 +61,21 @@ const WorkoutActions = ({ workout }: WorkoutActionsProps) => {
 
       {/* Add to Plan */}
       <button
-        onClick={handleAddToPlan}
-        className="btn flex-1 border-none bg-[#ccff00] text-black hover:bg-[#b8e600]"
-      >
-        Add to today&apos;s plan
-      </button>
+  onClick={handleAddToPlan}
+  className="btn border-none bg-[#ccff00] text-black hover:bg-[#b8e600]"
+>
+  <FiPlus size={18} />
+  Add to today&apos;s plan
+</button>
 
       {/* Save */}
-      <button
-        onClick={handleSave}
-        className="btn flex-1 border border-zinc-700 bg-transparent text-white hover:bg-zinc-900"
-      >
-        Save for later
-      </button>
+    <button
+  onClick={handleSave}
+  className="btn border-zinc-700 bg-transparent text-white hover:border-[#ccff00] hover:bg-transparent"
+>
+  <FiBookmark size={18} />
+  Save for later
+</button>
 
     </div>
   );

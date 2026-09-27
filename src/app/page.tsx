@@ -18,7 +18,9 @@ export default async function Home() {
 
       
 
-       <WorkoutLibrary workouts={workouts} />
+       <div id="workout-library">
+  <WorkoutLibrary workouts={workouts} />
+</div>
     </main>
   );
 }
