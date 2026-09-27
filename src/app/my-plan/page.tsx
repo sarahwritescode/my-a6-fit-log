@@ -1,11 +1,14 @@
 "use client";
-import React from 'react';
+
+import React, { useState } from "react";
 import { toast } from "react-toastify";
-
-
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { FiChevronDown, FiClock, FiTrash2 } from "react-icons/fi";
+import { BsFire } from "react-icons/bs";
+import { FaStar } from "react-icons/fa";
+
+
 
 import { useFitLog } from "@/context/fitlogcontext";
 
@@ -19,16 +22,11 @@ const MyPlanPage = () => {
 
   const [activeTab, setActiveTab] = useState<"plan" | "saved">("plan");
 
-  // Metrics for today's plan
-  const totalMinutes = plan.reduce(
-    (total, workout) => total + workout.duration,
-    0
-  );
+  const [sortBy, setSortBy] = useState<
+    "Duration" | "Calories" | "Rating"
+  >("Duration");
 
-  const totalCalories = plan.reduce(
-    (total, workout) => total + workout.caloriesBurned,
-    0
-  );
+ 
 
   const handleRemove = (id: number, workoutName: string) => {
     if (activeTab === "plan") {
@@ -40,7 +38,42 @@ const MyPlanPage = () => {
     }
   };
 
-  const workouts = activeTab === "plan" ? plan : saved;
+  // Current list based on active tab
+  const currentWorkouts = activeTab === "plan" ? plan : saved;
+
+  // Metrics for current tab
+const totalMinutes = currentWorkouts.reduce(
+  (total, workout) => total + workout.duration,
+  0
+);
+
+const totalCalories = currentWorkouts.reduce(
+  (total, workout) => total + workout.caloriesBurned,
+  0
+);
+
+  // Sort current list
+  const workouts = [...currentWorkouts].sort((a, b) => {
+    if (sortBy === "Duration") {
+      return a.duration - b.duration;
+    }
+
+    if (sortBy === "Calories") {
+      return a.caloriesBurned - b.caloriesBurned;
+    }
+
+    if (sortBy === "Rating") {
+      return b.rating - a.rating;
+    }
+
+    return 0;
+  });
+
+  const handleSort = (
+    option: "Duration" | "Calories" | "Rating"
+  ) => {
+    setSortBy(option);
+  };
 
   return (
     <main className="min-h-screen bg-black px-4 py-10 text-white md:px-8">
@@ -66,7 +99,7 @@ const MyPlanPage = () => {
             </div>
 
             <div className="stat-value text-xl text-[#ccff00] md:text-3xl">
-              {plan.length}
+             {currentWorkouts.length}
             </div>
           </div>
 
@@ -92,16 +125,17 @@ const MyPlanPage = () => {
 
         </div>
 
-        {/* Tabs */}
-        <div className="mt-8 flex items-center justify-between border-b border-zinc-800">
+        {/* Tabs + Sort */}
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 pb-3">
 
+          {/* Tabs */}
           <div className="tabs tabs-boxed bg-zinc-950 p-1">
 
             <button
               onClick={() => setActiveTab("plan")}
               className={`tab ${activeTab === "plan"
-                  ? "bg-[#ccff00] font-bold text-black"
-                  : "text-zinc-400"
+                ? "bg-[#ccff00] font-bold text-black"
+                : "text-zinc-400"
                 }`}
             >
               Today&apos;s Plan
@@ -110,8 +144,8 @@ const MyPlanPage = () => {
             <button
               onClick={() => setActiveTab("saved")}
               className={`tab ${activeTab === "saved"
-                  ? "bg-[#ccff00] font-bold text-black"
-                  : "text-zinc-400"
+                ? "bg-[#ccff00] font-bold text-black"
+                : "text-zinc-400"
                 }`}
             >
               Saved
@@ -119,9 +153,72 @@ const MyPlanPage = () => {
 
           </div>
 
-          <span className="hidden text-xs text-zinc-600 sm:block">
-            {workouts.length} items
-          </span>
+          {/* Right side */}
+          <div className="flex items-center gap-3">
+
+            <span className="hidden text-xs text-zinc-600 sm:block">
+              {workouts.length} items
+            </span>
+
+            {/* Sort Dropdown */}
+            <div className="dropdown dropdown-end">
+
+              <button
+                tabIndex={0}
+                type="button"
+                className="btn btn-sm border-zinc-700 bg-zinc-950 text-zinc-300 hover:border-[#ccff00] hover:bg-zinc-900"
+              >
+                Sort By: {sortBy}
+                <FiChevronDown size={16} />
+              </button>
+
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu z-20 mt-2 w-44 rounded-xl border border-zinc-800 bg-zinc-950 p-2 shadow-xl"
+              >
+                <li>
+                  <button
+                    onClick={() => handleSort("Duration")}
+                    className={
+                      sortBy === "Duration"
+                        ? "bg-[#ccff00] font-bold text-black hover:bg-[#b8e600]"
+                        : "text-zinc-300"
+                    }
+                  >
+                    Duration
+                  </button>
+                </li>
+
+                <li>
+                  <button
+                    onClick={() => handleSort("Calories")}
+                    className={
+                      sortBy === "Calories"
+                        ? "bg-[#ccff00] font-bold text-black hover:bg-[#b8e600]"
+                        : "text-zinc-300"
+                    }
+                  >
+                    Calories
+                  </button>
+                </li>
+
+                <li>
+                  <button
+                    onClick={() => handleSort("Rating")}
+                    className={
+                      sortBy === "Rating"
+                        ? "bg-[#ccff00] font-bold text-black hover:bg-[#b8e600]"
+                        : "text-zinc-300"
+                    }
+                  >
+                    Rating
+                  </button>
+                </li>
+              </ul>
+
+            </div>
+
+          </div>
 
         </div>
 
@@ -196,19 +293,20 @@ const MyPlanPage = () => {
 
                   {/* Stats */}
                   <div className="flex flex-wrap gap-4 text-xs text-zinc-400">
-
-                    <span>
-                      ⏱ {workout.duration} min
+                    <span className="flex items-center gap-1.5">
+                      <FiClock size={14} />
+                      {workout.duration} min
                     </span>
 
-                    <span>
-                      🔥 {workout.caloriesBurned} kcal
+                    <span className="flex items-center gap-1.5">
+                      <BsFire size={14} />
+                      {workout.caloriesBurned} kcal
                     </span>
 
-                    <span>
-                      ★ {workout.rating}
+                    <span className="flex items-center gap-1.5">
+                      <FaStar size={13} />
+                      {workout.rating}
                     </span>
-
                   </div>
 
                   {/* Buttons */}
@@ -225,7 +323,9 @@ const MyPlanPage = () => {
                       <button
                         className="btn btn-sm border-none bg-[#ccff00] text-black hover:bg-[#b8e600]"
                         onClick={() => {
-                          toast.success(`${workout.name} marked as done!`);
+                          toast.success(
+                            `${workout.name} marked as done!`
+                          );
                         }}
                       >
                         ✓ Mark as Done
@@ -237,7 +337,7 @@ const MyPlanPage = () => {
                       className="btn btn-square btn-sm border-zinc-700 bg-transparent text-zinc-400 hover:border-red-500 hover:bg-red-500/10 hover:text-red-400"
                       aria-label={`Remove ${workout.name}`}
                     >
-                      ×
+                      <FiTrash2 size={16} />
                     </button>
 
                   </div>

@@ -2,8 +2,9 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <section className="bg-black text-white">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:grid-cols-2 lg:px-8 lg:py-24">
+    <section className="text-white">
+      <div className="min-h-87.5 mx-auto max-w-7xl lg:flex-row  flex-col rounded-2xl flex border border-gray-700 bg-gray-800 p-8 m-8  lg:p-12">
+
 
         {/* Left side - Text */}
         <div>

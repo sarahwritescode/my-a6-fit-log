@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Workout } from "@/typs/workout";
+import { FiClock } from "react-icons/fi";
+import { BsFire } from "react-icons/bs";
+import { FaStar } from "react-icons/fa";
 
 type WorkoutCardProps = {
     workout: Workout;
@@ -49,11 +52,12 @@ const WorkoutCard = ({ workout }: WorkoutCardProps) => {
 
                 {/* Stats */}
                 <div className="mt-5 flex items-center justify-between border-t border-zinc-800 pt-4 text-sm text-zinc-300">
-                    <span>⏱ {workout.duration} min</span>
-
-                    <span>🔥 {workout.caloriesBurned} kcal</span>
-
-                    <span>★ {workout.rating}</span>
+                    <span className="flex items-center gap-1.5">
+                        <FiClock size={15} /> {workout.duration} min </span>
+                    <span className="flex items-center gap-1.5">
+                        <BsFire size={15} /> {workout.caloriesBurned} kcal </span>
+                    <span className="flex items-center gap-1.5">
+                        <FaStar size={14} /> {workout.rating} </span>
                 </div>
 
             </div>
